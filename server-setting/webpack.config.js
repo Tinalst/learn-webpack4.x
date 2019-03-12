@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './public/index.js',
@@ -73,7 +74,17 @@ module.exports = {
                 }]
 
             }
-        ]
-    }
+        ],
+    },
+    resolve: {
+        alias: { //====== 设置访问本地第三方js库的路径
+            jQuery: path.resolve(__dirname, 'public/js/jquery-3.3.1.min.js')
+        }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({ // 自动加载模块而不必到处import或者require
+            jQ: 'jQuery'           // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
+        })
+    ]
 
 };
