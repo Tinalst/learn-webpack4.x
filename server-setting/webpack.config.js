@@ -4,11 +4,12 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './public/index.js',
     output: {
-        filename: '[name].js',
+        filename: 'bundle[name][hash].js',
         path: path.resolve(__dirname, 'build')
     },
     devServer: { //====== 配置 webpack-dev-server
@@ -97,7 +98,10 @@ module.exports = {
             jQuery: path.resolve(__dirname, 'public/js/jquery-3.3.1.min.js')
         }
     },
-    plugins: [
+    plugins: [ //====== 配置清除文件
+        new CleanWebpackPlugin({  // 默认删除output.path目录中的所有文件
+            verbose: true         // 将日志写入控制台
+        }),
         new webpack.ProvidePlugin({  // ======本地方式导入第三方js库步骤②
                                      // 自动加载模块而不必到处import或者require
             jQ: 'jQuery'             // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
@@ -114,7 +118,7 @@ module.exports = {
                 minifyJS: true,               // 压缩html内的js 变成一行
                 removeEmptyElements: true     // 清理内容为空的元素
             },
-            hash: true // 引入产出资源的时候加上哈希避免缓存
+            hash: true                        // 引入产出资源的时候加上哈希避免缓存
         }),
         new MiniCssExtractPlugin({ //====== 配置提取css打包成单独文件 ②
             filename: './css/[name].css'
@@ -127,7 +131,7 @@ module.exports = {
                     discardComments: { removeAll: true }  // 去除注释
                 }],
             },
-            canPrint: true // 表示插件能够在console中打印信息，默认值是true
+            canPrint: true                                // 表示插件能够在console中打印信息，默认值是true
 
         }),
         new CopyWebpackPlugin([{ //====== 配置未被引用的静态资源保留 未被直接引用的资源需要另外放置一个文件放置重复输出
