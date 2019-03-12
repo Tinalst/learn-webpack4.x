@@ -73,6 +73,17 @@ module.exports = {
                     }
                 }]
 
+            },
+            {   //====== 配置es6处理 ①下载babel-loader、 @babel/core、@babel/preset-env ②配置 ③ 新建babelrc文件 配置转换规则  { "presets": ['@babel/preset-env']}
+                test: /\.js$/,
+                exclude: /node_modules/, // 除了/node_modules/文件下外的js文件都进行babel-loader处理
+                // use: 'babel-loader'      // 结合babelrc配置文件使用
+                use: [{                     // 如果不想配置babelrc文件就这样配
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }]
             }
         ],
     },
