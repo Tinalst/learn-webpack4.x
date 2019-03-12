@@ -61,6 +61,17 @@ module.exports = {
                     }
                 }]
 
+            },
+            {
+                //====== 字体文件处理
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: './fonts'
+                    }
+                }]
+
             }
         ]
     }

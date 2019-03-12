@@ -1,5 +1,5 @@
-import './index.css';
-import './index.less';
-import './index.scss';
+import './css/index.css';
+import './css/index.less';
+import './css/index.scss';
 
 console.log('dev-server11');
