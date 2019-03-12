@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: './public/index.js',
@@ -19,8 +20,9 @@ module.exports = {
             {       //====== 配置编译css文件
                 test: /\.css$/,      // 用于标识应该被相应loader进行转换的某个或某些文件
                 use: [               // 表示进行转换时，应该使用哪个loader
-                    'style-loader',  // style-loader的顺序必须之于css-loader之上
+                    // 'style-loader',  // style-loader的顺序必须之于css-loader之上
                                      // Adds CSS to the DOM by injecting a <style> tag
+                    MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
                     'css-loader'
                 ]
             },
@@ -111,6 +113,9 @@ module.exports = {
                 removeEmptyElements: true     // 清理内容为空的元素
             },
             hash: true // 引入产出资源的时候加上哈希避免缓存
+        }),
+        new MiniCssExtractPlugin({ //====== 配置提取css打包成单独文件 ②
+            filename: './css/[name].css'
         })
     ]
 
