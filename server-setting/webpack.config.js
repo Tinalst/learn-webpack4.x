@@ -12,6 +12,9 @@ module.exports = {
         filename: 'bundle[name][hash].js',
         path: path.resolve(__dirname, 'build')
     },
+    devtool: "source-map", //====== 配置是否生成以及如何生成source map
+                     // eval : 能找到对应js文件的行数但是代码被压缩过了，但是找不到css对应行数，因为没有对loader进行映射
+                     // source-map: 找到与源代码一样的行数，打包后会生成map文件 ，支持js调试
     devServer: { //====== 配置 webpack-dev-server
         contentBase: './build', // 设置服务器访问的基本路径
         host: 'localhost',      // 服务器ip地址
