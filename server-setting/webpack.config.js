@@ -45,6 +45,22 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {      //===== 文件处理——配置编译图片
+                test: /\.(png|jpg|gif|jpeg|svg)$/,   // 默认打包后的图片文件名会是一个hash图片大小没有任何压缩
+                // use: 'file-loader'
+                use:[{
+                    loader: 'file-loader',
+                    options: {
+                        // name: '[path]bg.jpg'  // 打包后的图片存放在[path]代表的文件夹下
+                        name: '[hash]bg.jpg',          // 为文件配置自定义文件名模板（默认值[hash].[ext]）
+                                                 // [path]：相对于content的路径
+                        // context: '../'        // 设置上下文，默认是相对webpack.config.js
+                        // publicPath: 'http://www.abc.com/img' // 生成的图片路径为 http://www.abc.com/img/public/bg.jpg
+                        outputPath: './img'      // 设置打包之后图片存放文件路径相对于output.path
+                    }
+                }]
+
             }
         ]
     }
