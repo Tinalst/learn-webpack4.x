@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     entry: './public/index.js',
@@ -116,6 +117,17 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({ //====== 配置提取css打包成单独文件 ②
             filename: './css/[name].css'
+        }),
+        new OptimizeCssAssetsPlugin({//====== 配置优化css结构和压缩css
+            assetNameRegExp: /\.css$/g,                   // 正则表达式，匹配需要优化或者压缩的资源名 默认: /\.css$/g
+            cssProcessor: require('cssnano'),             // 用于压缩和优化css的处理器，默认值 cssnano
+            cssProcessorPluginOptions: {                  // 传递给cssProcessor的插件选项，默认值 {}
+                preset: ['default', {
+                    discardComments: { removeAll: true }  // 去除注释
+                }],
+            },
+            canPrint: true // 表示插件能够在console中打印信息，默认值是true
+
         })
     ]
 
