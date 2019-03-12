@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './public/index.js',
@@ -62,7 +63,7 @@ module.exports = {
                                                  // [path]：相对于content的路径
                         // context: '../'        // 设置上下文，默认是相对webpack.config.js
                         // publicPath: 'http://www.abc.com/img' // 生成的图片路径为 http://www.abc.com/img/public/bg.jpg
-                        outputPath: './img'      // 设置打包之后图片存放文件路径相对于output.path
+                        outputPath: './images'      // 设置打包之后图片存放文件路径相对于output.path
                     }
                 }]
 
@@ -128,7 +129,11 @@ module.exports = {
             },
             canPrint: true // 表示插件能够在console中打印信息，默认值是true
 
-        })
+        }),
+        new CopyWebpackPlugin([{ //====== 配置未被引用的静态资源保留 未被直接引用的资源需要另外放置一个文件放置重复输出
+            from: __dirname + '/public/assets',
+            to: __dirname + '/build/assets'
+        }])
     ]
 
 };
