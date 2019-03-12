@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './public/index.js',
@@ -48,7 +49,7 @@ module.exports = {
                 ]
             },
             {      //===== 文件处理——配置编译图片
-                test: /\.(png|jpg|gif|jpeg|svg)$/,   // 默认打包后的图片文件名会是一个hash图片大小没有任何压缩
+                test: /\.(png|jpg|gif|jpeg)$/,   // 默认打包后的图片文件名会是一个hash图片大小没有任何压缩
                 // use: 'file-loader'
                 use:[{
                     loader: 'file-loader',
@@ -92,9 +93,24 @@ module.exports = {
             jQuery: path.resolve(__dirname, 'public/js/jquery-3.3.1.min.js')
         }
     },
-    plugins: [                      // 本地方式导入第三方js库步骤②
-        new webpack.ProvidePlugin({ // 自动加载模块而不必到处import或者require
-            jQ: 'jQuery'            // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
+    plugins: [
+        new webpack.ProvidePlugin({  // ======本地方式导入第三方js库步骤②
+                                     // 自动加载模块而不必到处import或者require
+            jQ: 'jQuery'             // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
+        }),
+        new HtmlWebPackPlugin({ //====== 配置根据html模板自动生成html
+            template: './public/index.html',  // 指定html模板
+            filename: 'webpack.html',         // 指定自动生成的html文件名
+            minify: {
+                minimize: true,               // 是否打包为最小值
+                removeAttributeQuotes: true,  // 去除attribute引号
+                removeComments: true,         // 去除注释
+                collapseWhitespace: true,     // 去除空格 变成一行
+                minifyCSS: true,              // 压缩html页面里的样式 变成一行
+                minifyJS: true,               // 压缩html内的js 变成一行
+                removeEmptyElements: true     // 清理内容为空的元素
+            },
+            hash: true // 引入产出资源的时候加上哈希避免缓存
         })
     ]
 
