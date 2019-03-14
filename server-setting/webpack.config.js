@@ -21,7 +21,9 @@ module.exports = {
         host: 'localhost',      // 服务器ip地址
         port: 8080,             // 端口
         open: true,             // 自动打开页面
-        hot: true               // 模块热替换 步骤①
+        hot: true,              // 模块热替换 步骤①
+        hotOnly: true           // 模块热替换默认js改变会刷新页面，设置hotOnly就不会刷新页面
+                                // 关于js模块热更需要在响应的js文件主动接收
     },
     module: {
         rules: [ //====== loader配置
