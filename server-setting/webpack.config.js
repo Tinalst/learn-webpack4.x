@@ -12,23 +12,26 @@ module.exports = {
         filename: 'bundle[name][hash].js',
         path: path.resolve(__dirname, 'build')
     },
-    devtool: "source-map", //====== 配置是否生成以及如何生成source map
+    devtool: "cheap-module-eval-source-map", //====== 配置是否生成以及如何生成source map
                      // eval : 能找到对应js文件的行数但是代码被压缩过了，但是找不到css对应行数，因为没有对loader进行映射
-                     // source-map: 找到与源代码一样的行数，打包后会生成map文件 ，支持js调试
+                     // source-map: 找到与源代码一样的行数，打包后会生成map文件 ，支持js调试 推荐生产环境下使用 最完整的
+                     // cheap-module-eval-source-map :推荐开发的时候使用
     devServer: { //====== 配置 webpack-dev-server
         contentBase: './build', // 设置服务器访问的基本路径
         host: 'localhost',      // 服务器ip地址
         port: 8080,             // 端口
-        open: true              // 自动打开页面
+        open: true,             // 自动打开页面
+        hot: true               // 模块热替换 步骤①
     },
     module: {
         rules: [ //====== loader配置
             {       //====== 配置编译css文件
-                test: /\.css$/,      // 用于标识应该被相应loader进行转换的某个或某些文件
-                use: [               // 表示进行转换时，应该使用哪个loader
-                    // 'style-loader',  // style-loader的顺序必须之于css-loader之上
-                                     // Adds CSS to the DOM by injecting a <style> tag
-                    MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
+                test: /\.css$/,         // 用于标识应该被相应loader进行转换的某个或某些文件
+                use: [                  // 表示进行转换时，应该使用哪个loader
+                    'style-loader',     // style-loader的顺序必须之于css-loader之上
+                                        // Adds CSS to the DOM by injecting a <style> tag
+                                        // ps: 模块热替换关于样式是作用于style-loader的，所以如果想要样式出现热更新需要使用style-loader
+                    // MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
                     'css-loader'
                 ]
             },
@@ -149,7 +152,9 @@ module.exports = {
         new CopyWebpackPlugin([{ //====== 配置未被引用的静态资源保留 未被直接引用的资源需要另外放置一个文件放置重复输出
             from: __dirname + '/public/assets',
             to: __dirname + '/build/assets'
-        }])
+        }]),
+        new webpack.NamedModulesPlugin(), // 模块热替换 步骤②
+        new webpack.HotModuleReplacementPlugin() // 模块热替换 步骤③
     ]
 
 };
