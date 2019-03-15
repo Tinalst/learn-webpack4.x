@@ -13,16 +13,19 @@ module.exports = webpackMerge(common, {
     // eval : 能找到对应js文件的行数但是代码被压缩过了，但是找不到css对应行数，因为没有对loader进行映射
     // source-map: 找到与源代码一样的行数，打包后会生成map文件 ，支持js调试 推荐生产环境下使用 最完整的
     // cheap-module-eval-source-map :推荐开发的时候使用
-    resolve: {
-        alias: { //====== 设置访问本地第三方js库的路径  本地方式导入第三方js库步骤①
-            jQuery: path.resolve(__dirname, '../public/js/jquery-3.3.1.min.js')
-        }
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②,
+                    'css-loader'
+                ]
+            }
+
+        ]
     },
     plugins: [ //====== 配置清除文件
-        new webpack.ProvidePlugin({  // ======本地方式导入第三方js库步骤②
-            // 自动加载模块而不必到处import或者require
-            jQ: 'jQuery'             // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
-        }),
         new MiniCssExtractPlugin({ //====== 配置提取css打包成单独文件 ②
             filename: './css/[name].css'
         }),

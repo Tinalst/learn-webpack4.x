@@ -2,6 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HappyPack = require('happypack');
+
+
+/***
+ * 返回绝对路径
+ * @param dir
+ * @return {*}
+ */
+function resolve(dir){
+    return path.join(__dirname, '..', dir);
+}
 
 module.exports = {
     entry: './public/index.js',
@@ -10,39 +21,43 @@ module.exports = {
         path: path.resolve(__dirname, '../build')
     },
     module: {
+        noParse: /public\/js\/jquery-3.3.1.min.js/, // 构建优化
         rules: [ //====== loader配置
             {       //====== 配置编译css文件
                 test: /\.css$/,         // 用于标识应该被相应loader进行转换的某个或某些文件
                 use: [                  // 表示进行转换时，应该使用哪个loader
-                    'style-loader',     // style-loader的顺序必须之于css-loader之上
+                    // 'style-loader',     // style-loader的顺序必须之于css-loader之上
                                         // Adds CSS to the DOM by injecting a <style> tag
                                         // ps: 模块热替换关于样式是作用于style-loader的，所以如果想要样式出现热更新需要使用style-loader
                     // MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
-                    'css-loader'
+                    // 'css-loader',
+                    'happypack/loader?id=happyCss'
                 ]
             },
             {       //====== 配置编译less文件
                 test: /\.less$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'less-loader'      // 支持编译less(前提是安装less)
+                    // 'style-loader',
+                    // 'css-loader',
+                    // 'less-loader'      // 支持编译less(前提是安装less)
+                    'happypack/loader?id=happyLess'
                 ]
             },
             {       //====== 配置编译scss文件
                 test: /\.scss$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader',   // 支持编译sass文件(前提是安装node-sass)
-                    { //====== 配置添加浏览器前缀
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [
-                                require('autoprefixer') // (必须添加浏览器版本设置)浏览器版本设置在package.json的browserlist里
-                            ]
-                        }
-                    }
+                    // 'style-loader',
+                    // 'css-loader',
+                    // 'sass-loader',   // 支持编译sass文件(前提是安装node-sass)
+                    // { //====== 配置添加浏览器前缀
+                    //     loader: 'postcss-loader',
+                    //     options: {
+                    //         plugins: [
+                    //             require('autoprefixer') // (必须添加浏览器版本设置)浏览器版本设置在package.json的browserlist里
+                    //         ]
+                    //     }
+                    // },
+                  'happypack/loader?id=happyScss'
                 ]
             },
             {      //===== 文件处理——配置编译图片
@@ -65,7 +80,7 @@ module.exports = {
                 //====== 字体文件处理
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
                 use: [{
-                    loader: 'file-loader',
+                    loader: 'file-loader',  // ps: happypack对file-loader的支持不友好，不建议使用
                     options: {
                         outputPath: './fonts'
                     }
@@ -74,29 +89,41 @@ module.exports = {
             },
             {   //====== 配置es6处理 ①下载babel-loader、 @babel/core、@babel/preset-env ②配置 ③ 新建babelrc文件 配置转换规则  { "presets": ['@babel/preset-env']}
                 test: /\.js$/,
-                exclude: /node_modules/, // 除了/node_modules/文件下外的js文件都进行babel-loader处理
+                include: [resolve('public')], //构建优化
+                exclude: /node_modules/, // 除了/node_modules/文件下外的js文件都进行babel-loader处理。 构件优化
                 // use: 'babel-loader'      // 结合babelrc配置文件使用
-                use: [{                     // 如果不想配置babelrc文件就这样配
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }]
+                // use: [{                     // 如果不想配置babelrc文件就这样配
+                    // loader: 'babel-loader?cacheDirectory=true', // cacheDirectory=true 设置缓存，优先使用默认缓存目录node_module/.cache/babel-loader
+                    // options: {
+                    //     presets: ['@babel/preset-env']
+                    // }
+                // }],
+                loader: 'happypack/loader?id=happyBabel' // 构建优化
             },
             {
                 test: /\.(html)$/,
-                use: [{
-                    loader: 'html-loader',
-                    options: {
-                        attrs: ['img:src', 'img:data-src']
-                    }
-                }]
+                include: [resolve('public')], //构建优化
+                exclude:  /node_modules/,
+                use: [
+                    // {
+                    //     loader: 'html-loader',
+                    //     options: {
+                    //         attrs: ['img:src', 'img:data-src']
+                    //     }
+                    // },
+                    'happypack/loader?id=happyHtml'
+                ]
             }
         ],
     },
     resolve: {
+        extensions: ['.js'], // 指定文件尝试后缀列表，减少尝试次数，优化构建速度
+        modules: [ // 配置在哪些目录下寻找第三方模块,优化构件速度
+          resolve('public'),
+          resolve('node_modules')
+        ],
         alias: { //====== 设置访问本地第三方js库的路径  本地方式导入第三方js库步骤①
-            jQuery: path.resolve(__dirname, 'public/js/jquery-3.3.1.min.js')
+            jQuery: path.resolve(__dirname, '../public/js/jquery-3.3.1.min.js')
         }
     },
     plugins: [ //====== 配置清除文件
@@ -120,6 +147,46 @@ module.exports = {
                 removeEmptyElements: true     // 清理内容为空的元素
             },
             hash: true                        // 引入产出资源的时候加上哈希避免缓存
+        }),
+        new HappyPack({  // 构建优化
+            id: 'happyBabel',
+            threads: 3,
+            loaders:[
+                {
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['@babel/preset-env'],
+                        cacheDirectory: true
+                    }
+                }
+            ]
+        }),
+        new HappyPack({
+            id: 'happyScss',
+            threads: 4,
+            loaders: ['style-loader!css-loader!sass-loader!postcss-loader']
+        }),
+        new HappyPack({
+            id: 'happyCss',
+            threads: 5,
+            loaders: ['style-loader!css-loader']
+        }),
+        new HappyPack({
+            id: 'happyLess',
+            threads: 6,
+            loaders: [ 'style-loader!css-loader!less-loader']
+        }),
+        new HappyPack({
+            id: 'happyHtml',
+            threads: 7,
+            loaders: [
+                {
+                    loader: 'html-loader',
+                    query: {
+                        attrs: ['img:src', 'img:data-src']
+                    }
+                }
+            ]
         })
     ]
 
