@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -13,11 +12,11 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 function resolve(dir){
     return path.join(__dirname, '..', dir);
 }
-
-let enrties = {
-    index: 'index',
-    pageone: 'pageone'
-};
+//
+// let enrties = {
+//     index: 'index',
+//     pageone: 'pageone'
+// };
 
 module.exports = {
     entry: {
@@ -26,23 +25,22 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.[hash].js',         // 出口文件名称
-
-        path: path.resolve(__dirname, '../build/pages')  // 用于存放出口文件的文件夹路径
+        path: path.resolve(__dirname, '../build/pages/')  // 用于存放出口文件的文件夹路径
     },
     module: {
         noParse: /public\/js\/jquery-3.3.1.min.js/, // 构建优化
         rules: [ //====== loader配置
-            {       //====== 配置编译css文件
-                test: /\.css$/,            // 用于标识应该被相应loader进行转换的某个或某些文件
-                use: [                     // 表示进行转换时，应该使用哪个loader
-                    // 'style-loader',     // style-loader的顺序必须之于css-loader之上
-                                           // Adds CSS to the DOM by injecting a <style> tag
-                                           // ps: 模块热替换关于样式是作用于style-loader的，所以如果想要样式出现热更新需要使用style-loader
-                    // MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
-                    // 'css-loader',
-                    'happypack/loader?id=happyCss'
-                ]
-            },
+            // {       //====== 配置编译css文件
+            //     test: /\.css$/,            // 用于标识应该被相应loader进行转换的某个或某些文件
+            //     use: [                     // 表示进行转换时，应该使用哪个loader
+            //         // 'style-loader',     // style-loader的顺序必须之于css-loader之上
+            //                                // Adds CSS to the DOM by injecting a <style> tag
+            //                                // ps: 模块热替换关于样式是作用于style-loader的，所以如果想要样式出现热更新需要使用style-loader
+            //         // MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
+            //         // 'css-loader',
+            //         // 'happypack/loader?id=happyCss'
+            //     ]
+            // },
             {       //====== 配置编译less文件
                 test: /\.less$/,
                 use: [
@@ -76,7 +74,7 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         // name: '[path]bg.jpg'  // 打包后的图片存放在[path]代表的文件夹下
-                        name: '[hash]bg.jpg',          // 为文件配置自定义文件名模板（默认值[hash].[ext]）
+                        name: '[hash][name].jpg',          // 为文件配置自定义文件名模板（默认值[hash].[ext]）
                         // [path]：相对于content的路径
                         // context: '../'        // 设置上下文，默认是相对webpack.config.js
                         // publicPath: 'http://www.abc.com/img' // 生成的图片路径为 http://www.abc.com/img/public/bg.jpg
@@ -135,23 +133,7 @@ module.exports = {
             jQuery: path.resolve(__dirname, '../public/js/jquery-3.3.1.min.js')
         }
     },
-    plugins: Object.keys(enrties).map(key => {
-        return new HtmlWebPackPlugin({ //====== 配置根据html模板自动生成html
-            template: './public/pages/' + key +'/index.html',  // 指定html模板
-            filename: key + '.[hash].html',                    // 指定自动生成的html文件名
-            minify: {
-                minimize: true,               // 是否打包为最小值
-                removeAttributeQuotes: true,  // 去除attribute引号
-                removeComments: true,         // 去除注释
-                collapseWhitespace: true,     // 去除空格 变成一行
-                minifyCSS: true,              // 压缩html页面里的样式 变成一行
-                minifyJS: true,               // 压缩html内的js 变成一行
-                removeEmptyElements: true     // 清理内容为空的元素
-            },
-            hash: true,                        // 引入产出资源的时候加上哈希避免缓存，
-            chunks: [key]                      // 设置页面模板需要对应的js脚本，如果不加这一行，每个页面就会引入所有的js脚本
-        })
-    }).concat([ //====== 配置清除文件
+    plugins: [ //====== 配置清除文件
         new webpack.ProvidePlugin({  // ======本地方式导入第三方js库步骤②
             // 自动加载模块而不必到处import或者require
             jQ: 'jQuery'             // {key(在项目中使用的别名):value(第三方库的引用路径，如果没有设置resolve.alias.jQuery会在node_module中查找)}
@@ -174,11 +156,11 @@ module.exports = {
             threads: 4,
             loaders: ['style-loader!css-loader!sass-loader!postcss-loader']
         }),
-        new HappyPack({
-            id: 'happyCss',
-            threads: 5,
-            loaders: ['style-loader!css-loader']
-        }),
+        // new HappyPack({
+        //     id: 'happyCss',
+        //     threads: 5,
+        //     loaders: ['style-loader!css-loader']
+        // }),
         new HappyPack({
             id: 'happyLess',
             threads: 6,
@@ -196,7 +178,7 @@ module.exports = {
                 }
             ]
         }),
-        // new BundleAnalyzerPlugin()
-    ])
+        new BundleAnalyzerPlugin()
+    ]
 
 };
