@@ -1,4 +1,4 @@
-import './content.scss';
+import style from './content.scss';
 
 export function Content() {
   let dom = document.getElementById('root');
@@ -6,6 +6,6 @@ export function Content() {
   content.innerText = 'content';
   dom.append(content);
   let girl = document.createElement('div');
-  girl.classList.add('girl');
+  girl.classList.add(style.girl);
   dom.append(girl);
 }
