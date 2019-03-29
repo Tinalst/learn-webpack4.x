@@ -1,4 +1,5 @@
 import '../../css/common.scss'
+import '../../css/base.scss';
 import './index.scss'
 
 import {of} from "rxjs";

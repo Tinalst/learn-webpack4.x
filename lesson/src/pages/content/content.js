@@ -9,3 +9,5 @@ export function Content() {
   girl.classList.add(style.girl);
   dom.append(girl);
 }
+
+new Content();

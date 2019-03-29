@@ -4,3 +4,4 @@ export function Header() {
   header.innerText = 'header';
   dom.append(header);
 }
+new Header();

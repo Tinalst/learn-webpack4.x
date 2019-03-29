@@ -21,7 +21,8 @@ function resolve(dir){
 module.exports = {
     entry: {
         index: './public/pages/index/index.js',
-        pageone: './public/pages/pageone/index.js'
+        pageone: './public/pages/pageone/pageone.js',
+        pagetwo: './public/pages/pagetwo/pagetwo.js'
     },
     output: {
         filename: '[name].bundle.[hash].js',         // 出口文件名称

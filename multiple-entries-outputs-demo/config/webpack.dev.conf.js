@@ -32,7 +32,7 @@ module.exports =  webpackMerge(common, {
                   // ps: 模块热替换关于样式是作用于style-loader的，所以如果想要样式出现热更新需要使用style-loader
                   // MiniCssExtractPlugin.loader, //====== 配置提取css文件单独打包 ②
                   // 'css-loader',
-                  // 'happypack/loader?id=happyCss'
+                  'happypack/loader?id=happyCss'
               ]
           },
       ]

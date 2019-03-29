@@ -1,5 +1,6 @@
+import '../../css/base.scss';
 import '../../css/common.scss';
-import './index.scss';
+import './pageone.scss';
 import {of} from "rxjs";
 
 console.log('pageone');

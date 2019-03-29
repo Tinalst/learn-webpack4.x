@@ -1,14 +1,20 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development', // 模式：<[production] || development || none> 默认production
   entry: {
-    main: './src/pages/index.js'
+    main: './src/pages/index/index.js'
   },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build')
   },
+  plugins:[
+    // new HtmlWebpackPlugin({
+    //     template: 'src/pages/'
+    // })
+  ],
   module: {
     rules: [
       {
@@ -30,7 +36,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 2,
+              importLoaders: 2,  // 确保在scss文件中通过@import引入的文件也能经过postcss-loader与sass-loader的处理
               modules: true
             }
           },

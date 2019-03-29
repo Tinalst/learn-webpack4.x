@@ -5,3 +5,5 @@ export function Sidebar() {
   dom.append(sidebar);
 }
 
+new Sidebar();
+

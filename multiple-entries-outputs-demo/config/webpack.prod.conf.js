@@ -43,24 +43,39 @@ module.exports = webpackMerge(common, {
     },
     optimization: {//====== 抽取公共模块
         splitChunks: {
-            chunks: 'all', // 表示哪些代码需要优化 <initial: 初始块 | async: 按需加载快 | all: 全部块>
-            minSize: 0, // 设置文件达到多大后被拆分 默认30kb
-            cacheGroups: {
-                vendors: { // 包含node_modules的公用商
+            chunks: 'all',     // all: 将所有在node_module里的文件放入名叫vendors~xxx.js文件中 (bundle split)
+            minSize: 0,        // 设置文件达到多大后被拆分 默认30kb
+            maxInitialRequests: Infinity,
+            cacheGroups: {//====== 定义将块分组到输出文件中的规则
+                vendor: { // 用于从node_module加载任何模块
                     test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                    name(module){
+                        // 获取名字 E.G. node_modules/packageName/not/this/part.js
+                        // 或者 node_modules/packageName
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                    // priority: 20
                 },
-                default: { // 包含其他共享模块的缓存组 例如公共样式抽取
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
+                // common: {
+                //   name: 'common',
+                //   minChunks: 2,
+                //   chunks: 'async' ,
+                //   priority: 10,
+                //   reuseExistingChunk: true,
+                //   enforce: true
+                // }
+                // default: { // 包含其他共享模块的缓存组 例如公共样式抽取
+                //     minChunks: 2,
+                //     priority: -20,
+                //     reuseExistingChunk: true
+                // }
             }
         }
     },
     plugins: Object.keys(enrties).map(key => {
         return new HtmlWebPackPlugin({ //====== 配置根据html模板自动生成html
-            template: './public/pages/' + key +'/index.html',  // 指定html模板
+            template: './public/pages/' + key +'/' + key + '.html',  // 指定html模板
             filename: key + '.[hash].html',                    // 指定自动生成的html文件名
             minify: {
                 minimize: true,               // 是否打包为最小值
@@ -79,7 +94,8 @@ module.exports = webpackMerge(common, {
             verbose: true         // 将日志写入控制台
         }),
         new MiniCssExtractPlugin({ //====== 配置提取css打包成单独文件 ②
-            filename: '../css/[name].css'
+            filename: '[name].css',
+            chunkFilename: '[id].css'
         }),
         new OptimizeCssAssetsPlugin({//====== 配置优化css结构和压缩css
             assetNameRegExp: /\.css$/g,                   // 正则表达式，匹配需要优化或者压缩的资源名 默认: /\.css$/g

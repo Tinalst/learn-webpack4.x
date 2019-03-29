@@ -1,4 +1,5 @@
 module.exports =  {
     index: 'index',
-    pageone: 'pageone'
+    pageone: 'pageone',
+    pagetwo: 'pagetwo'
 }
