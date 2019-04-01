@@ -29,6 +29,14 @@ module.exports = {
           }
         }
       },
+        {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              'css-loader',
+              'postcss-loader'
+            ]
+        },
       {
         test: /\.scss$/,
         use: [
@@ -45,13 +53,13 @@ module.exports = {
         ]
       },
       {
-        test: /\.(ttf|eot|svg|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            outputPath: 'fonts/'
-          }
-        }
+          test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
+          use: [{
+              loader: 'url-loader',
+              options: {
+                  limit: 10000
+              }
+          }]
       }
     ]
   }
