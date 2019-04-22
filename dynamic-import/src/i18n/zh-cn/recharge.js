@@ -1,0 +1,1 @@
+export default {"text":{"ETH":"本地址只支持ETH资产，转入其它资产将无法找回\r\n","BTC":"本地址只支持BTC资产，转入其它资产将无法找回\r\n"},"share":"分享"}

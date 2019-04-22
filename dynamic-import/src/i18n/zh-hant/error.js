@@ -1,0 +1,1 @@
+export default {"BTCServer":{"402":"網絡緩慢，請稍後再試"},"common":{}}

@@ -1,0 +1,1 @@
+export default {"btnCreate":"创建钱包","btnImport":"导入钱包","titleCreate":"用户协议","titleImport":"导入ETH钱包","i18nObj":{"title":"Terms of Service"}}

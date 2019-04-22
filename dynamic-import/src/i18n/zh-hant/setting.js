@@ -1,0 +1,1 @@
+export default {"liEditName":"錢包名稱","liBackup":"備份錢包助記詞","liExport":"導出私鑰","titleExport":"備份私鑰","titleEdit":"編輯錢包名稱","invalidCode":"安全密碼錯誤","alertSetting":{"title":"驗證安全密碼","typeTitle":"安全密碼","inputPlacehoder":"請輸入安全密碼","btn":"確定"},"i18nObj":{"codeErr":"安全碼錯誤","typeFirst":"請先輸入內容","invalidMethod":"當前地址不支持導出私鑰","editTitle":"錢包名稱","exportTitle":"導出助記詞"}}

@@ -1,0 +1,1 @@
+export default {"subtitle":"私鑰","btnCopy":"複製私鑰","attention":"請離線保存，勿使用任何联網工具保存您的私鑰信息","copySucc":"複製成功","i18nObj":{"copySucc":"複製成功"}}

@@ -1,0 +1,1 @@
+export default {"prompt":"請按照正確的順序輸入12位助記詞","attention":"請輸入正確順序的助記詞","btnConfirm":"確定","title":"備份助記詞","i18nObj":{"title":"備份助記詞"}}

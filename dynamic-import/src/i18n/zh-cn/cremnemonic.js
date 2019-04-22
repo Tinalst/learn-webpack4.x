@@ -1,0 +1,1 @@
+export default {"verifyMnemonicTitle":"验证助记词","prompt":"请按照顺序记录以下12个助记词，并妥善保管\r\n","confirm":"确定","attention":"*助记词与私钥信息，只会本地保存，Pundi X不会存储您任何助记词与私钥信息","i18nObj":{"title":"验证助记词"}}

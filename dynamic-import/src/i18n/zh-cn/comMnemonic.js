@@ -1,0 +1,1 @@
+export default {"prompt":"助记词备份成功","text":"请妥善保管，并不要泄露给他人","confirm":"确定"}

@@ -15,3 +15,5 @@ workspace.xml
 *.sln
 package-lock.json
 
+!/dynamic-import/package-lock.json
+!/dynamic-import/dist/index.html

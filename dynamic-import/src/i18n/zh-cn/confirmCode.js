@@ -1,0 +1,1 @@
+export default {"subtitle":"确认安全密码","placeholder":"请确认安全密码","next":"下一步","cremnemonicTitle":"备份助记词","importWalletTite":"导入ETH钱包","i18nObj":{"ethTitle":"导入ETH钱包","btcTitle":"导入BTC钱包","backTitle":"备份助记词"}}

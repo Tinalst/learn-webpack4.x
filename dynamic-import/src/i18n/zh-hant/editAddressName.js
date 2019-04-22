@@ -1,0 +1,1 @@
+export default {"subtitle":"編輯錢包名稱","edit":"確定","i18nObj":{"editSucc":"編輯成功"}}
