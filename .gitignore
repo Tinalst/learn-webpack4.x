@@ -17,3 +17,4 @@ package-lock.json
 
 !/dynamic-import/package-lock.json
 !/dynamic-import/dist/index.html
+!/dynamic-import/dist/i18n/
