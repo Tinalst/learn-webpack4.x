@@ -1,1 +1,0 @@
-export default {"subtitle":"確認安全密碼","placeholder":"請確認安全密碼","next":"下一步","cremnemonicTitle":"備份助記詞","importWalletTite":"導入ETH錢包","i18nObj":{"ethTitle":"導入ETH錢包","btcTitle":"導入BTC錢包","backTitle":"備份助記詞"}}

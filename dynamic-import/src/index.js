@@ -1,27 +1,36 @@
-import {TinaI18n} from "./i18n/TinaI18n";
-
+import pdxI18n from 'pdx-i18n';
 window.onload = function () {
   // 实例化国际化
-  const tinaI18n = initI18N('zh-hant', 'addWallet');
+  // Instantiation internationalization
+  const myI18n = initI18N('zh-hant', 'add');
 
   // 简体中文
+  // Simplified Chinese
   document.querySelector('#cn').addEventListener('click', ()=>{
-    tinaI18n.setInnerHtml('zh-cn');
+    myI18n.setInnerHtml('zh-cn');
   });
 
   // 繁体中文
+  // traditional Chinese
   document.querySelector('#hant').addEventListener('click', ()=>{
-    tinaI18n.setInnerHtml('zh-hant');
+    myI18n.setInnerHtml('zh-hant');
+  });
+
+  // 英文
+  // english
+  document.querySelector('#en').addEventListener('click', ()=>{
+    myI18n.setInnerHtml('en');
   })
 };
 
 // 初始化国际化
+// Initialization internationalization
 function initI18N(currentlang, currentFile) {
-  const tinaI18n =  new TinaI18n({
+  const i18n =  new pdxI18n({
     currentLang: currentlang,
     useFileName: currentFile
   });
-  tinaI18n.setInnerHtml();
-  return tinaI18n;
+  i18n.setInnerHtml();
+  return i18n;
 }
 

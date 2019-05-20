@@ -1,1 +1,0 @@
-export default {"title":"ETH钱包列表","createTitle":"创建钱包","importTitle":"导入钱包","errorNotSame":"地址列表和地址状态列表数据不统一","alertSetting":{"title":"验证安全密码","typeTitle":"安全密码","inputPlacehoder":"请输入安全密码","btn":"确定"}}

@@ -1,1 +1,0 @@
-export default {"prompt":"助記詞備份成功","text":"請妥善保管，並不要洩露給他人","confirm":"確定"}

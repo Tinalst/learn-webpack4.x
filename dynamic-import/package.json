@@ -25,6 +25,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "core-js": "^2.6.5",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "npm-tinalim-tutorial": "^1.0.0",
+    "pdx-i18n": "^2.1.1"
   }
 }

@@ -1,9 +1,0 @@
-export default {
-    "articeTitle": "Terms of Service",
-    "article": "1. All NPXS stored in this card will be entitled for f(x) Staking. Each 10,000 NPXS held for a minimum of 7 days will get you 1 FX token. Transfer of NPXS (withdrawal and deposit) will influence your mining result. Mining begins when the NPXS is received, in which the result will be calculated 24 hours after the NPXS were deposited.1. All NPXS stored in this card will be entitled for f(x) mining. Each 10,000 NPXS held for a minimum of 7 days will get you 1 FX token. Transfer of NPXS (withdrawal and deposit) will influence your mining result. Mining begins when the NPXS is received, in which the result will be calculated 24 hours after the NPXS were deposited.1. All NPXS stored in this card will be entitled for f(x) mining. Each 10,000 NPXS held for a minimum of 7 days will get you 1 FX token. Transfer of NPXS (withdrawal and deposit) will influence your mining result. Mining begins when the NPXS is received, in which the result will be calculated 24 hours after the NPXS were deposited.1. All NPXS stored in this card will be entitled for f(x) mining. Each 10,000 NPXS held for a minimum of 7 days will get you 1 FX token. Transfer of NPXS (withdrawal and deposit) will influence your mining result. Mining begins when the NPXS is received, in which the result will be calculated 24 hours after the NPXS were deposited.1. All NPXS stored in this card will be entitled for f(x) mining. Each 10,000 NPXS held for a minimum of 7 days will get you 1 FX token. Transfer of NPXS (withdrawal and deposit) will influence your mining result. Mining begins when the NPXS is received, in which the result will be calculated 24 hours after the NPXS were deposited.",
-    "textLeft": "Agree to ",
-    "textRight": "Terms of Service",
-    "btnNext": "Next",
-    "title": "Security password",
-    "i18nObj": {"title": "Security password"}
-}

@@ -1,1 +1,0 @@
-export default {"subtitle":"助记词","btnCopy":"复制助记词","attention":"请离线保存，勿使用任何联网工具保存您的私钥信息","i18nObj":{"copySuccess":"复制成功","invalidErr":"助记词备份失败"}}

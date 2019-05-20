@@ -1,1 +1,0 @@
-export default {"prompt":"请按照正确的顺序输入12位助记词","attention":"请输入正确顺序的助记词","btnConfirm":"确定","title":"备份助记词","i18nObj":{"title":"备份助记词"}}

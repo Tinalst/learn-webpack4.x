@@ -1,1 +1,0 @@
-export default {"subtitle":"安全密碼","placeholder":"請設置安全密碼","attention":"至少8位，至少包含一個大寫字母、小寫字母和數字","btnNext":"下一步","i18nObj":{"title":"安全密碼"}}
