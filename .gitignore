@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
-dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -18,3 +17,4 @@ package-lock.json
 !/dynamic-import/package-lock.json
 !/dynamic-import/dist/index.html
 !/dynamic-import/dist/i18n/
+/dynamic-import/src/pdxI18n.js
